@@ -2,7 +2,7 @@
 
 #====================================================
 #	System Request:Debian 7+/Ubuntu 14.04+/Centos 6+
-#	Author:	wulabing,breakwa2333
+#	Author:	wulabing,breakwa2333,hashuser
 #	Dscription: V2ray ws+tls onekey 
 #	Version: 1.0.1
 #	Blog: https://www.wulabing.com
@@ -336,8 +336,28 @@ show_information(){
 
 }
 
-install_bbr_plus(){
-    bash -c "$(wget --no-check-certificate -qO- https://github.com/Aniverse/TrCtrlProToc0l/raw/master/A)"
+system_config(){
+  echo "net.core.default_qdisc=fq_codel" > /etc/sysctl.conf
+  echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_keepalive_time=300" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_keepalive_intvl=5" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_keepalive_probes=3" >> /etc/sysctl.conf
+  echo "net.core.somaxconn=262114" >> /etc/sysctl.conf
+  echo "net.ipv4.icmp_echo_ignore_all=1" >> /etc/sysctl.conf
+  echo "net.ipv4.ip_default_ttl=128" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_adv_win_scale=3" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_max_syn_backlog=8192" >> /etc/sysctl.conf
+  echo "net.nf_conntrack_max=2000000" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_slow_start_after_idle=0" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_fin_timeout=30" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_rmem=4096 32768 6291456" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_wmem=4096 32768 6291456" >> /etc/sysctl.conf
+  echo "net.ipv4.tcp_mem =786432 1048576 26777216" >> /etc/sysctl.conf
+  sysctl -p
+  apt-get install resolvconf -y
+  echo "dns-nameservers 1.1.1.1" >> /etc/network/interfaces
+  /etc/init.d/networking restart
+  /etc/init.d/resolvconf restart
 }
 
 main(){
@@ -358,6 +378,7 @@ main(){
     systemctl stop nginx
     systemctl enable v2ray.service
     systemctl stop v2ray
+    system_config
     
     #将证书生成放在最后，尽量避免多次尝试脚本从而造成的多次证书申请
     ssl_install

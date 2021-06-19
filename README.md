@@ -15,4 +15,4 @@ bash <(curl -L -s dos2unix https://raw.githubusercontent.com/hashuser/v2ray-onek
 ### Goal:
 * ~~Random camouflage website~~
 * Remove installed file before installing
-* Install BBR Plus automatically
+* ~~Install BBR automatically~~

@@ -251,6 +251,7 @@ acme(){
 v2ray_conf_add(){
     mkdir -p /etc/v2ray && cd /etc/v2ray
     wget https://raw.githubusercontent.com/hashuser/v2ray-onekey/master/tls/config.json -O config.json
+    cp /etc/v2ray/config.json /usr/local/etc/v2ray/config.json
     modify_port_UUID
     judge "V2ray 配置修改"
 }
@@ -360,27 +361,6 @@ system_config(){
   /etc/init.d/resolvconf restart
 }
 
-v2ray_service(){
-  cat>/etc/systemd/system/v2ray.service<<EOF
-  [Unit]
-  Description=V2Ray Service
-  Documentation=https://www.v2fly.org/
-  After=network.target nss-lookup.target
-
-  [Service]
-  User=nobody
-  CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-  AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-  NoNewPrivileges=true
-  ExecStart=/usr/local/bin/v2ray -config /etc/v2ray/config.json
-  Restart=on-failure
-  RestartPreventExitStatus=23
-
-  [Install]
-  WantedBy=multi-user.target
-EOF
-}
-
 main(){
     is_root
     apt-get update
@@ -395,7 +375,6 @@ main(){
     v2ray_conf_add
     nginx_conf_add
     web_camouflage
-    v2ray_service
 
     #改变证书安装位置，防止端口冲突关闭相关应用
     systemctl stop nginx

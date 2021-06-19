@@ -10,7 +10,7 @@
   * Auto reboot
 ### Useage(Websocket+TLS+Nginx):
 ```
-bash <(curl -L -s dos2unix https://raw.githubusercontent.com/breakwa2333/v2ray-onekey/master/install.sh) | tee v2ray_ins.log
+bash <(curl -L -s dos2unix https://raw.githubusercontent.com/hashuser/v2ray-onekey/master/install.sh) | tee v2ray_ins.log
 ```
 ### Goal:
 * ~~Random camouflage website~~

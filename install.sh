@@ -362,6 +362,7 @@ system_config(){
 
 main(){
     is_root
+    apt-get update
     check_system
     dependency_install
     domain_check

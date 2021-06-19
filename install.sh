@@ -234,7 +234,7 @@ port_exist_check(){
 }
 
 acme(){
-    ~/.acme.sh/acme.sh --issue -d ${domain} --standalone -k ec-384 --force
+    ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt --issue -d ${domain} --standalone -k ec-384 --force 
     if [[ $? -eq 0 ]];then
         echo -e "${OK} ${GreenBG} SSL 证书生成成功 ${Font}"
         sleep 2
@@ -250,7 +250,7 @@ acme(){
 }
 v2ray_conf_add(){
     mkdir -p /etc/v2ray && cd /etc/v2ray
-    wget https://raw.githubusercontent.com/breakwa2333/v2ray-onekey/master/tls/config.json -O config.json
+    wget https://raw.githubusercontent.com/hashuser/v2ray-onekey/master/tls/config.json -O config.json
     modify_port_UUID
     judge "V2ray 配置修改"
 }

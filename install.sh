@@ -251,6 +251,7 @@ acme(){
 v2ray_conf_add(){
     mkdir -p /etc/v2ray && cd /etc/v2ray
     wget https://raw.githubusercontent.com/hashuser/v2ray-onekey/master/tls/config.json -O config.json
+    chmod 644 /usr/local/etc/v2ray/config.json
     cp /etc/v2ray/config.json /usr/local/etc/v2ray/config.json
     modify_port_UUID
     judge "V2ray 配置修改"
